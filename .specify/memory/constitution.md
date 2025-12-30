@@ -1,55 +1,182 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  SYNC IMPACT REPORT
+  ==================
+  Version change: 0.0.0 → 1.0.0 (initial ratification)
+
+  Modified principles: N/A (initial constitution)
+
+  Added sections:
+    - Core Principles (6 principles)
+    - Technical Constraints
+    - Development Workflow
+    - Governance
+
+  Removed sections: N/A
+
+  Templates requiring updates:
+    ✅ .specify/templates/plan-template.md - No changes required (generic)
+    ✅ .specify/templates/spec-template.md - No changes required (generic)
+    ✅ .specify/templates/tasks-template.md - No changes required (generic)
+
+  Follow-up TODOs: None
+-->
+
+# Todo In-Memory Python Console Application Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-Driven Development
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All behavior MUST originate from written specifications. No assumptions or implicit logic are permitted.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Every feature MUST be documented in a specification before implementation
+- Implementation decisions MUST be traceable to a specific specification requirement
+- No feature exists without a corresponding spec entry
+- Changes to behavior require spec amendment first, then implementation
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Ensures complete traceability from requirements to code, enabling reviewers
+to validate the agentic workflow and verify developer intent through specifications.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. In-Memory Only Storage
 
-### [PRINCIPLE_6_NAME]
+The application MUST store all data strictly in memory with no persistence layer.
 
+- ❌ No file system storage (no JSON, CSV, SQLite, or any file-based storage)
+- ❌ No database connections (no SQL, NoSQL, or embedded databases)
+- ❌ No caching layers (no Redis, Memcached, or disk cache)
+- ❌ No persistence of any kind between application sessions
+- ✅ All task data exists only during runtime execution
 
-[PRINCIPLE__DESCRIPTION]
+**Rationale**: Phase I Hackathon constraint enforces focus on core functionality and
+spec-driven workflow rather than infrastructure complexity.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### III. Agentic Code Generation
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+All code MUST be generated via Claude Code. No manual code editing is permitted.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- ❌ No direct coding by the developer
+- ❌ No manual code editing at any stage
+- ✅ All changes occur through spec refinement and agentic generation
+- ✅ Code modifications require spec update → regeneration workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: Demonstrates fully agentic development workflow where Claude Code acts as
+the sole code author, validating the spec-driven development process.
+
+### IV. Console Interface Only
+
+The application MUST use command-line/console interface exclusively.
+
+- ❌ No UI frameworks or web interfaces
+- ❌ No GUI libraries or graphical components
+- ❌ No REST APIs or network interfaces
+- ✅ All interaction via stdin/stdout/stderr
+- ✅ Human-readable console output with clear formatting
+
+**Rationale**: Constrains scope to core functionality, ensuring the hackathon deliverable
+focuses on demonstrating spec-driven development rather than interface complexity.
+
+### V. Clean Code Standards
+
+All generated code MUST adhere to clean code principles.
+
+- Clear function and variable naming (self-documenting)
+- Single responsibility per function
+- Logical separation of concerns
+- Readable and maintainable structure
+- No dead code or unused logic
+- No code comments unless logic is non-obvious
+
+**Rationale**: Even auto-generated code must be reviewable and maintainable. Code quality
+reflects specification quality.
+
+### VI. Deterministic Behavior
+
+Given the same inputs, the application MUST behave consistently and predictably.
+
+- Task IDs MUST be unique and sequential
+- Operations MUST produce identical results for identical inputs
+- Error messages MUST be clear and actionable
+- State changes MUST be explicit and traceable
+
+**Rationale**: Predictable behavior enables testing and validation of the spec-driven
+workflow without debugging non-deterministic edge cases.
+
+## Technical Constraints
+
+- **Language**: Python 3.13+ (MUST use this version)
+- **Runtime/Environment**: UV package manager and runtime
+- **Interface**: Console/CLI only
+- **Storage**: In-memory only (Python data structures)
+- **Dependencies**: Python standard library only (no external packages)
+- **Code Generation**: Claude Code exclusively
+- **Specification Framework**: Spec-Kit Plus
+
+### Mandatory Features (Five Basic Features)
+
+The application MUST implement all five features:
+
+1. **Add Task**: Create a task with title and description
+2. **View Tasks**: Display all tasks with clear status indicators
+3. **Update Task**: Modify task title and/or description by ID
+4. **Delete Task**: Remove a task by unique ID
+5. **Toggle Status**: Mark tasks as complete or incomplete
+
+### Task Data Structure
+
+- Task ID: Unique, sequential, auto-generated integer
+- Title: Required string (non-empty)
+- Description: Required string (may be empty)
+- Status: Complete or Incomplete (boolean)
+
+## Development Workflow
+
+### Agentic Dev Stack Workflow
+
+```
+Write Spec → Generate Plan → Break into Tasks → Implement via Claude Code
+```
+
+1. **Specification Phase**: Define behavior in spec.md
+2. **Planning Phase**: Create implementation plan in plan.md
+3. **Task Generation**: Break plan into actionable tasks.md
+4. **Implementation**: Execute tasks via Claude Code
+5. **Validation**: Verify against specification requirements
+
+### Change Management
+
+- All changes flow through specification updates
+- Direct code modifications are prohibited
+- Spec refinement triggers regeneration of downstream artifacts
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Amendment Procedure
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. Propose amendment with rationale
+2. Document impact on existing specifications
+3. Update constitution with new version
+4. Propagate changes to dependent templates
+5. Record in Prompt History Record (PHR)
+
+### Versioning Policy
+
+- **MAJOR**: Backward incompatible principle changes or removals
+- **MINOR**: New principles or materially expanded guidance
+- **PATCH**: Clarifications, wording, or non-semantic refinements
+
+### Compliance Requirements
+
+- All PRs/reviews MUST verify compliance with this constitution
+- Complexity MUST be justified against principles
+- Violations require documented exception with rationale
+
+### Success Criteria Verification
+
+- All five required features work correctly via console
+- Tasks managed entirely in memory
+- Project structure matches required layout
+- Specs clearly show evolution and refinement
+- Implementation strictly follows specifications
+- Reviewers can validate full agentic workflow from specs to code
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-30 | **Last Amended**: 2025-12-30
